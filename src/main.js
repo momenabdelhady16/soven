@@ -10,9 +10,11 @@ import * as authService from "./services/authservice.js";
 import * as cartService from "./services/cartservice.js";
 import * as productsService from "./services/productsservice.js";
 
-// controllers
+// model
 import * as model from "./model/model.js";
 
+// controller
+import * as controller from "./controller/controller.js";
 // views
 import * as cartView from "./views/cartview.js";
 import * as forgetView from "./views/forgetview.js";
@@ -23,6 +25,3 @@ import * as registerView from "./views/registerview.js";
 
 // router
 import * as router from "./router.js";
-
-
-

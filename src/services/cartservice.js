@@ -9,8 +9,8 @@ import {
   doc,
 } from "firebase/firestore";
 
-export const addToCart = (uid, productId) => {
-  return setDoc(
+export const addToCart = async (uid, productId) => {
+  await setDoc(
     doc(db, "users", uid, "cart", `${productId}`),
     {
       quantity: increment(1),
@@ -19,27 +19,24 @@ export const addToCart = (uid, productId) => {
   );
 };
 
-export const getCartItems = (uid) => {
-  return getDocs(collection(db, "users", uid, "cart")).then((snapshot) => {
-    const cartItems = snapshot.docs.map((item) => ({
-      id: Number(item.id),
-      quantity: item.data().quantity,
-    }));
-    return cartItems;
-  });
+export const getCartItems = async (uid) => {
+  const snapshot = await getDocs(collection(db, "users", uid, "cart"));
+  const cartItems = snapshot.docs.map((item) => ({
+    id: Number(item.id),
+    quantity: item.data().quantity,
+  }));
+  return cartItems;
 };
 
 export const removeFromCart = (uid, productId) => {
   return deleteDoc(doc(db, "users", uid, "cart", `${productId}`));
 };
 
-export const clearCart = (uid) => {
+export const clearCart = async (uid) => {
   const batch = writeBatch(db);
-  return getDocs(collection(db, "users", uid, "cart"))
-    .then((querySnapshot) => {
-      querySnapshot.forEach((d) => {
-        batch.delete(d.ref);
-      });
-    })
-    .then(() => batch.commit());
+  const snapshot = await getDocs(collection(db, "users", uid, "cart"));
+  snapshot.forEach((d) => {
+    batch.delete(d.ref);
+  });
+  return batch.commit();
 };
