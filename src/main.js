@@ -1,27 +1,37 @@
-// config
-import * as firebase from "./config/firebase.js";
-
-// utils
-import * as escapeHtml from "./utils/escapehtml.js";
-import * as ui from "./utils/ui.js";
-
-// services
+import * as model from "./model/model.js";
+import * as view from "./views/view.js";
+import * as router from "./router.js";
 import * as authService from "./services/authservice.js";
 import * as cartService from "./services/cartservice.js";
 import * as productsService from "./services/productsservice.js";
-
-// model
-import * as model from "./model/model.js";
-
-// controller
 import * as controller from "./controller/controller.js";
-// views
-import * as cartView from "./views/cartview.js";
-import * as forgetView from "./views/forgetview.js";
-import * as homeView from "./views/homeview.js";
-import * as loginView from "./views/loginview.js";
-import * as notFoundView from "./views/notfoundview.js";
-import * as registerView from "./views/registerview.js";
+import * as escapeHtml from "./utils/escapehtml.js";
 
-// router
-import * as router from "./router.js";
+const deps = {
+  model: model,
+  view: view,
+  router: router,
+  authService: authService,
+  cartService: cartService,
+  productsService: productsService,
+  controller: controller,
+  escapeHtml: escapeHtml,
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  initApp();
+});
+async function initApp() {
+  await authService.onAuthStateChanged((res) => {
+    const state = { auth: { state: "", user: res ? res.uid : null } };
+    if (!res) {
+      state.auth.state = "notLogged";
+    } else state.auth.state = "logged";
+    state.page = router.router(state.auth.state);
+    model.setState(state);
+    const newState = model.getState()
+    router.navigateTo(newState.page);
+    view.render(newState.page)
+  });
+  controller.initController(deps);
+}

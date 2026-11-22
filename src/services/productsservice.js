@@ -4,12 +4,15 @@ export async function getAllProducts() {
   if (!data.ok) {
     throw new Error(`HTTP Error: ${data.status}`);
   }
-  return data.json();
+  const json = await data.json();
+  return json.products;
 }
 export async function getOneProduct(productId) {
-  const product = await fetch(`https://dummyjson.com/products/${productId}`);
+  const product = await fetch(`${api}/${productId}`);
   if (!product.ok) {
     throw new Error(`HTTP Error: ${product.status}`);
   }
-  return product.json();
+  const json = await data.json();
+
+  return json;
 }

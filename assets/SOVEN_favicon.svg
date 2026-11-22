@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="180" height="180" viewBox="0 0 180 180"
+     role="img" aria-labelledby="title desc">
+  <title id="title">SOVEN favicon</title>
+  <desc id="desc">The SOVEN geometric S emblem in a mint-green gradient on a transparent background.</desc>
+  <defs>
+    <linearGradient id="soven-mint" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#20F3C0"/>
+      <stop offset="0.55" stop-color="#00DDB5"/>
+      <stop offset="1" stop-color="#00BFA7"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(15.2 11.9) scale(1.1) translate(-18 -11)"
+     fill="url(#soven-mint)" fill-rule="evenodd">
+    <path d="M18 50 L76 16 Q84 11 92 16 L148 48 Q154 52 154 59 L154 75 L86 114 L55 96 L122 57 L84 35 L18 73 Z"/>
+    <path d="M18 96 L84 58 L115 76 L50 114 L84 134 L154 94 L154 112 L92 148 Q84 153 76 148 L18 114 Z"/>
+  </g>
+</svg>
