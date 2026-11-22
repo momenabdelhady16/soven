@@ -1,6 +1,5 @@
 import { setState } from "./model/model.js";
 const routes = [
-  { path: /^\/$/ },
   { path: /^\/home$/ },
   { path: /^\/login$/ },
   { path: /^\/register$/ },
