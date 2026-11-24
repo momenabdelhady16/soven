@@ -11,9 +11,8 @@ const app = document.querySelector("#app");
 export function render(page, data) {
   if (page === "/home") {
     app.innerHTML = homeView.homeView();
-    console.log(data)
   } else if (page === "/cart") {
     app.innerHTML = cartView.cartView();
-    console.log(data)
   }
 }
+

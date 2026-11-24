@@ -16,3 +16,7 @@ export const onAuthStateChanged = (callback) => {
 export const sendPasswordResetEmail = (email) => {
   return authentication.sendPasswordResetEmail(auth, email);
 };
+export async function authState() {
+  await auth.authStateReady();
+  return auth.currentUser;
+}

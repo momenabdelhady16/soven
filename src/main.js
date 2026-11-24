@@ -14,7 +14,6 @@ const deps = {
   authService: authService,
   cartService: cartService,
   productsService: productsService,
-  controller: controller,
   escapeHtml: escapeHtml,
 };
 
@@ -22,16 +21,13 @@ window.addEventListener("DOMContentLoaded", () => {
   initApp();
 });
 async function initApp() {
-  await authService.onAuthStateChanged((res) => {
-    const state = { auth: { state: "", user: res ? res.uid : null } };
-    if (!res) {
-      state.auth.state = "notLogged";
-    } else state.auth.state = "logged";
-    state.page = router.router(state.auth.state);
-    model.setState(state);
-    const newState = model.getState()
-    router.navigateTo(newState.page);
-    view.render(newState.page)
-  });
+  const authState = await authService.authState();
+  const state = {
+    auth: {
+      state: authState ? "logged" : "notLogged",
+      user: authState ? authState.uid : null,
+    },
+  };
+  model.setState(state);
   controller.initController(deps);
 }

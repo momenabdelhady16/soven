@@ -8,8 +8,10 @@ export async function initController({
   controller,
   escapeHtml,
 }) {
-  let productId;
+  model.setState(router.router(model.getState().auth.state));
+  model.subscribe(async () => await refresh(model, router, view));
   const app = document.querySelector("#app");
+  await refresh(model, router, view);
   app.addEventListener("click", (e) => {
     const login = e.target.closest("#login");
     if (login) {
@@ -20,29 +22,42 @@ export async function initController({
     }
   });
 
-  window.addEventListener("hashchange", async () => {
+  window.addEventListener("hashchange", () => {
     const state = model.getState();
     const recentPath = router.router(state.auth.state);
-    model.setState({ page: recentPath });
-    router.navigateTo(recentPath);
-    console.log(recentPath);
-    if (
-      recentPath === "/login" ||
-      recentPath === "/reset-password" ||
-      recentPath === "/register" ||
-      recentPath === "/loading" ||
-      recentPath === "/notfound"
-    ) {
-      view.render(recentPath);
-    } else if (recentPath === "/home") {
-      const data = await model.getProducts();
-      view.render(recentPath, data);
-    } else if (recentPath.startsWith("/product/")) {
-      const data = await model.getOneProduct(productId);
-      view.render(recentPath, data);
-    } else if (recentPath === "/cart") {
-      const data = await model.getCart();
-      view.render(recentPath, data);
-    }
+    model.setState(recentPath);
   });
+
+  authService.onAuthStateChanged(async (res) => {
+    const auth = {
+      state: res ? "logged" : "notLogged",
+      user: res ? res.uid : null,
+    };
+    const current = model.getState().auth;
+    if (auth.user === current.user && auth.state === current.state) return;
+    const page = router.router(auth.state);
+    model.setState({ auth, page: page.page });
+  });
+}
+async function refresh(model, router, view) {
+  const state = model.getState();
+  router.navigateTo(state.page);
+  if (
+    state.page === "/login" ||
+    state.page === "/reset-password" ||
+    state.page === "/register" ||
+    state.page === "/loading" ||
+    state.page === "/notfound"
+  ) {
+    view.render(state.page);
+  } else if (state.page === "/home") {
+    const data = await model.getProducts();
+    view.render(state.page, data);
+  } else if (state.page.startsWith("/product/")) {
+    const data = await model.getOneProduct(state.selectedProduct);
+    view.render(state.page, data);
+  } else if (state.page === "/cart") {
+    const data = await model.getCart();
+    view.render(state.page, data);
+  }
 }
