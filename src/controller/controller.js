@@ -21,6 +21,11 @@ export async function initController({
       e.preventDefault();
       const input = Object.fromEntries(new FormData(loginForm));
       model.login(input);
+    } else if (e.target.closest(".btn-add-one-to-cart")) {
+      e.preventDefault();
+      const quantityForm = document.querySelector("#quantity-form");
+      model.addToCart(e.target.closest(".btn-add-to-cart").dataset.id);
+    } else if (e.target.closest(".btn-add-one")) {
     } else if (e.target.closest(".btn-add-to-cart")) {
       e.preventDefault();
       const quantityForm = document.querySelector("#quantity-form");
@@ -84,15 +89,15 @@ async function refresh(model, router, view) {
     state.page === "/loading" ||
     state.page === "/notfound"
   ) {
-    view.render(state.page,state.auth.state);
+    view.render(state.page, state.auth.state);
   } else if (state.page === "/home") {
     const data = await model.getProducts();
-    view.render(state.page, data,state.auth.state);
+    view.render(state.page, data, state.auth.state);
   } else if (state.page.startsWith("/product/")) {
     const data = await model.getOneProduct(state.selectedProduct);
-    view.render(state.page, data,state.auth.state);
+    view.render(state.page, data, state.auth.state);
   } else if (state.page === "/cart") {
     const data = await model.prepareCart();
-    view.render(state.page, data,state.auth.state);
+    view.render(state.page, data, state.auth.state);
   }
 }
