@@ -44,7 +44,7 @@ function navbar(authState) {
               >
                 <a href="#/home">
                   <img
-                    src="./assets/SOVEN_logo_nav.svg"
+                    src="/assets/SOVEN_logo_nav.svg"
                     alt="logo"
                     class="w-[200px]"
                   />
@@ -66,7 +66,7 @@ function footer() {
                   </div>
                   <span class="text-[12px] text-[#888a85]">Home, style, tech, and more. One thoughtful place to shop.</span>
                 </div>
-                <a href="#/home"><Img class="w-50 md:w-55 self-start" src="./assets/SOVEN_logo_nav_dark.svg" alt="logo" width={} height={} /></a>
+                <a href="#/home"><Img class="w-50 md:w-55 self-start" src="/assets/SOVEN_logo_nav_dark.svg" alt="logo" width={} height={} /></a>
               </div>
               <div class=" mt-4 border-t border-mist-800 py-5 text-center text-[#777a74]">
                 <p> © 2026 Copyrights</p>
