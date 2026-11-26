@@ -8,7 +8,7 @@ export function loginView() {
                     class="flex flex-col p-[24px] lg:py-[96px] gap-[48px] items-center bg-[#F5F5F2] w-full h-full box-border rounded-4xl"
                 >
                     <img
-                    src="./assets/SOVEN_logo_000608.svg"
+                    src="./assets/SOVEN_logo_nav.svg"
                     alt="logo"
                     class="w-[200px] self-start lg:hidden "
                     />

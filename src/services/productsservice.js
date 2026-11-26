@@ -12,7 +12,7 @@ export async function getOneProduct(productId) {
   if (!product.ok) {
     throw new Error(`HTTP Error: ${product.status}`);
   }
-  const json = await data.json();
+  const json = await product.json();
 
   return json;
 }

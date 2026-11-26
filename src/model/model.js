@@ -67,10 +67,12 @@ export async function login({ email, password }) {
 export async function getProducts() {
   return productsService.getAllProducts();
 }
-export async function getOneProduct(productId) {
-  return productsService.getOneProduct(productId);
-}
+
 export async function getCart() {
   const uid = getState().auth.user;
   return cartService.getCartItems(uid);
+}
+export async function getOneProduct(id){
+  const data = await productsService.getOneProduct(id)
+  return data
 }
