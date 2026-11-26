@@ -28,7 +28,7 @@ export const router = (authState) => {
       return { page: recentPath.join() };
     }
   }
-  if (!endPoint) endPoint = "/home";
+  if (!endPoint || endPoint === '/') endPoint = "/home";
   routes.forEach((route) => {
     endPoint.match(route.path)
       ? recentPath.push(endPoint.match(route.path)[0])

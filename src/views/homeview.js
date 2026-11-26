@@ -49,7 +49,7 @@ export function fillInCards(products) {
               ${product.description}
             </p>
             <button
-
+              data-id = "${product.id}"
               class="btn-add-to-cart text[-40px] w-full h-12 rounded-lg hover:scale-[1.01] ease-in active:scale-[0.98] transition-all bg-[#111311] text-[#f5f5f2] font-semibold text-[20px] mt-2 cursor-pointer"
             >
               Add to Cart
@@ -72,13 +72,13 @@ export function onePageProduct(product) {
             <span class="py-4 text-[24px]">$${product.price}</span>
             <p class="text-[#666a63] text-[18px]">${product.description}</p>
           </div>
-          <form class="flex gap-3 mt-10">
+          <form class="flex gap-3 mt-10" id="quantity-form">
             <div class="bg-gray-50 border-gray-300 border-1 text-[#444a44] w-30 md:w-36 lg:w-33 h-14 rounded-xl focus-within:outline-emerald-400 focus-within:outline-1 flex" >
               <button id="decrease-quantity" class="cursor-pointer text-[18px] px-2">-</button>
-              <input type="number" id="quantity" class="w-full h-full focus:outline-0 p-2" />
+              <input name="quantity" type="number" id="quantity" class="w-full h-full focus:outline-0 p-2" value = 0 />
               <button id="increase-quantity" class="cursor-pointer text-[18px] px-2">+</button>
             </div>
-            <button class="bg-[#111311] text-[#f5f5f5] py-4 w-full rounded-xl">Add To Cart</button>
+            <button form="quantity-form" data-id = "${product.id}" class="btn-add-to-cart bg-[#111311] text-[#f5f5f5] py-4 w-full rounded-xl">Add To Cart</button>
           </form>
         </div>
       </div>
@@ -97,8 +97,8 @@ function reviews(reviews) {
       month: "short",
       day: "numeric",
       year: "numeric",
-      hour:"numeric",
-      minute:"2-digit"
+      hour: "numeric",
+      minute: "2-digit",
     });
     return `<div class=" py-4 p-4 border border-gray-300 bg-gray-50 rounded-2xl">
         <div class="flex justify-between flex-wrap">
@@ -118,7 +118,7 @@ function reviews(reviews) {
     `;
   });
   return `<section class="bg-[#F5F5F2] px-8 md:px-20 py-4 flex flex-col gap-3">
-  ${formatedReviews.join("")};
+  ${formatedReviews.join("")}
   </section>`;
 }
 //  "rating": 3,

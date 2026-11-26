@@ -64,6 +64,9 @@ export async function login({ email, password }) {
     console.log(error);
   }
 }
+export async function logout() {
+  return authService.signOutUser();
+}
 export async function getProducts() {
   return productsService.getAllProducts();
 }
@@ -72,7 +75,35 @@ export async function getCart() {
   const uid = getState().auth.user;
   return cartService.getCartItems(uid);
 }
-export async function getOneProduct(id){
-  const data = await productsService.getOneProduct(id)
-  return data
+export async function getOneProduct(id) {
+  const data = await productsService.getOneProduct(id);
+  return data;
+}
+export async function prepareCart() {
+  const metadata = await state.cart;
+  const data = await Promise.all(
+    metadata.map((item) => getOneProduct(item.id)),
+  );
+  const metaMap = new Map();
+  metadata.forEach((item) => {
+    metaMap.set(item.id, item.quantity);
+  });
+  return [data, metaMap];
+}
+export async function initCart() {
+  if (state.auth.state === "logged" && state.auth.user !== null) {
+    const data = await cartService.getCartItems(state.auth.user);
+    setState({ cart: data });
+  }
+}
+
+export async function addToCart(productId, quantity = 1, add = true) {
+  if (state.auth.user) {
+    for (let i = 0; i < quantity; i++) {
+      await cartService.addToCart(state.auth.user, productId, add);
+    }
+  } else {
+    throw new Error("Not Logged");
+  }
+  await initCart();
 }

@@ -8,9 +8,9 @@ import * as registerView from "./registerview.js";
 
 const app = document.querySelector("#app");
 
-export function render(page, data) {
+export function render(page, data, authState) {
   const hm = [];
-  const nav = navbar();
+  const nav = navbar(authState);
   const foot = footer();
   if (page === "/home") {
     hm.push(nav);
@@ -18,29 +18,40 @@ export function render(page, data) {
     hm.push(foot);
     app.innerHTML = hm.join();
   } else if (page === "/cart") {
-    app.innerHTML = cartView.cartView();
+    hm.push(nav);
+    hm.push(cartView.cartView(data));
+    hm.push(foot);
+    app.innerHTML = hm.join("");
   } else if (page.startsWith("/product/")) {
     hm.push(navbar());
     hm.push(homeView.onePageProduct(data));
     hm.push(footer());
     app.innerHTML = hm.join("");
     window.scrollTo(top);
+  } else if (page === "/login") {
+    app.innerHTML = loginView.loginView();
   }
 }
 
-function navbar() {
+function navbar(authState) {
+  let logIco;
+  if (authState === "logged")
+    logIco = `<li><a id="logout" href="#/home"><i class="fa-solid fa-arrow-right-from-bracket text-[24px] cursor-pointer hover:scale-[1.1] transition-all ease-in-out" "=""></i></a></li>`;
+  else logIco = `<li><a href="#/login"><i class="fa-solid fa-user text-[24px] cursor-pointer hover:scale-[1.1] transition-all ease-in-out" "=""></i></a></li>`;
   return `
               <nav
                 class="py-[20px] px-[36px] bg-[#F5F5F2] w-full flex justify-between items-center shadow-lg fixed top-0 border-be-1 border-b-gray-300"
               >
-                <img
-                  src="./assets/SOVEN_logo_nav.svg"
-                  alt="logo"
-                  class="w-[200px]"
-                />
+                <a href="#/home">
+                  <img
+                    src="./assets/SOVEN_logo_nav.svg"
+                    alt="logo"
+                    class="w-[200px]"
+                  />
+                </a>
                 <ul class="flex justify-end gap-6">
                   <li><a href="#/cart" ><i class="fa-solid fa-basket-shopping cursor-pointer hover:scale-[1.1] transition-all ease-in-out text-[24px] "></i></a></li>
-                  <li><a id="logout" href="#/home"><i class="fa-solid fa-arrow-right-from-bracket text-[24px] cursor-pointer hover:scale-[1.1] transition-all ease-in-out""></i></a></li>
+                  ${logIco}
                 </ul>
               </nav>
   `;
@@ -55,7 +66,7 @@ function footer() {
                   </div>
                   <span class="text-[12px] text-[#888a85]">Home, style, tech, and more. One thoughtful place to shop.</span>
                 </div>
-                <a href="#/home"><Img class="w-50 md:w-55 self-start" src="./assets/SOVEN_logo_nav_dark.svg" alt="alt" width={} height={} /></a>
+                <a href="#/home"><Img class="w-50 md:w-55 self-start" src="./assets/SOVEN_logo_nav_dark.svg" alt="logo" width={} height={} /></a>
               </div>
               <div class=" mt-4 border-t border-mist-800 py-5 text-center text-[#777a74]">
                 <p> © 2026 Copyrights</p>

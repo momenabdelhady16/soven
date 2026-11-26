@@ -9,11 +9,11 @@ import {
   doc,
 } from "firebase/firestore";
 
-export const addToCart = async (uid, productId) => {
+export const addToCart = async (uid, productId, add = true) => {
   await setDoc(
     doc(db, "users", uid, "cart", `${productId}`),
     {
-      quantity: increment(1),
+      quantity: add ? increment(1) : increment(-1),
     },
     { merge: true },
   );
