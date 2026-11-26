@@ -23,8 +23,7 @@ export async function initController({
       model.login(input);
     } else if (e.target.closest(".btn-add-one-to-cart")) {
       e.preventDefault();
-      const quantityForm = document.querySelector("#quantity-form");
-      model.addToCart(e.target.closest(".btn-add-to-cart").dataset.id);
+      model.addToCart(e.target.closest(".btn-add-one-to-cart").dataset.id);
     } else if (e.target.closest(".btn-add-one")) {
     } else if (e.target.closest(".btn-add-to-cart")) {
       e.preventDefault();
