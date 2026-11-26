@@ -49,8 +49,9 @@ export function fillInCards(products) {
               ${product.description}
             </p>
             <button
+              data-value=1
               data-id = "${product.id}"
-              class="btn-add-to-cart text[-40px] w-full h-12 rounded-lg hover:scale-[1.01] ease-in active:scale-[0.98] transition-all bg-[#111311] text-[#f5f5f2] font-semibold text-[20px] mt-2 cursor-pointer"
+              class="btn-add-one-to-cart text[-40px] w-full h-12 rounded-lg hover:scale-[1.01] ease-in active:scale-[0.98] transition-all bg-[#111311] text-[#f5f5f2] font-semibold text-[20px] mt-2 cursor-pointer"
             >
               Add to Cart
             </button>
